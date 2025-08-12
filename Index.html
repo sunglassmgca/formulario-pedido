@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUNGLASS MG C.A.</title>
+    <!-- Importa la fuente Playfair Display de Google Fonts para un estilo más elegante -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <!-- Incluye Tailwind CSS desde CDN para un estilo moderno -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Estilo para la fuente Inter, ampliamente utilizada y legible */
+        body {
+            font-family: 'Inter', sans-serif;
+            /* Fondo con imagen de puerta de vidrio y agua */
+            background-image: url('https://images.unsplash.com/photo-1549449000-88849b2c3a50?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-color: #f0fdf4; /* Un color de respaldo por si la imagen no carga */
+        }
+        /* Estilo para la fuente Playfair Display, aplicada solo al título principal */
+        .font-playfair {
+            font-family: 'Playfair Display', serif;
+        }
+        /* Oculta los botones de flecha en los inputs de tipo number */
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+        /* Estilos para el modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 90%;
+            width: 400px;
+        }
+
+        /* Estilos para el modal de visualización de pedidos (no usado en esta versión) */
+        .orders-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .orders-modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 95%;
+            max-width: 1200px;
+            height: 95%;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8 flex items-center justify-center">
+
+    <!-- Contenedor principal con fondo semitransparente -->
+    <div id="main-container" class="max-w-4xl w-full bg-white bg-opacity-90 p-6 md:p-10 rounded-xl shadow-2xl border border-gray-100 backdrop-blur-sm">
+
+        <!-- Vista de la página de inicio -->
+        <div id="home-view" class="h-[60vh] flex flex-col items-center justify-center text-center transition-opacity duration-500 ease-in-out">
+            <h1 class="font-playfair text-4xl md:text-6xl font-extrabold text-green-900 tracking-wide mb-4">SUNGLASS MG C.A.</h1>
+            <p class="text-lg md:text-xl text-gray-700 mb-12">Bienvenido. Por favor, selecciona tu tipo de usuario.</p>
+            <div class="flex flex-col sm:flex-row gap-6">
+                <button id="clienteBtn" class="px-8 py-4 text-2xl font-bold text-white bg-green-600 rounded-full shadow-lg hover:bg-green-700 transition transform duration-150 ease-in-out hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                    Cliente
+                </button>
+            </div>
+        </div>
+
+        <!-- Nueva vista informativa para el cliente -->
+        <div id="info-view" class="hidden transition-opacity duration-500 ease-in-out">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+                <h1 class="font-playfair text-3xl md:text-5xl font-extrabold text-green-900 tracking-wide mb-4 sm:mb-0">SUNGLASS MG C.A.</h1>
+                <button id="backToHomeFromInfoBtn" class="w-full sm:w-auto px-6 py-2 text-sm font-medium text-gray-600 bg-gray-100 rounded-full hover:bg-gray-200 transition duration-150 ease-in-out">
+                    Volver a Inicio
+                </button>
+            </div>
+            <div class="p-6 md:p-8 bg-green-50 rounded-xl shadow-inner border border-green-200">
+                <h2 class="text-2xl font-bold mb-4 text-green-700">Servicio de Templado Consolidado</h2>
+                <p class="mb-4 text-gray-700">
+                    Estimado Cliente,
+                    Gracias por interesarte en nuestro nuevo servicio de Templado Consolidado.
+                </p>
+                <p class="mb-4 text-gray-700">
+                    Somos SUNGLASS MG y nos especializamos en brindar servicios logísticos especializados para cristaleros.
+                </p>
+                <p class="mb-4 text-gray-700">
+                    Queremos presentarte nuestro nuevo servicio de Templado Consolidado, el cual te ofrece la oportunidad de facilitar el acceso a procesadores confiables de la zona a un menor costo logístico.
+                </p>
+                <p class="mb-6 text-gray-700">
+                    Lo invitamos a realizar una prueba sin compromiso a través de nuestro formulario y de una manera fácil y rápida. Con mucho gusto lo estaremos contactando para presentar nuestra oferta.
+                </p>
+                <div class="flex justify-center">
+                    <button id="proceedToFormBtn" class="px-8 py-3 text-lg font-semibold text-white bg-green-600 rounded-full shadow-lg hover:bg-green-700 transition transform duration-150 ease-in-out hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                        Ir al Formulario
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contenedor de la vista del formulario de pedido (inicialmente oculto) -->
+        <div id="form-view" class="hidden transition-opacity duration-500 ease-in-out">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+                <h1 class="font-playfair text-3xl md:text-5xl font-extrabold text-green-900 tracking-wide mb-4 sm:mb-0">SUNGLASS MG C.A.</h1>
+                <!-- Botón de "Volver a Inicio" -->
+                <button id="backToHomeBtn" class="w-full sm:w-auto px-6 py-2 text-sm font-medium text-gray-600 bg-gray-100 rounded-full hover:bg-gray-200 transition duration-150 ease-in-out">
+                    Volver a Inicio
+                </button>
+            </div>
+
+            <h1 class="text-3xl font-extrabold mb-8 text-center text-green-800">Solicitud de Servicio de Templado</h1>
+
+            <form id="pedidoForm">
+
+                <!-- Nuevos campos para Número de Solicitud y Fecha de Creación -->
+                <div class="mb-8">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="solicitudNumero" class="block text-sm font-medium text-gray-700 mb-1">Número de Solicitud</label>
+                            <!-- Este campo será rellenado automáticamente por el script -->
+                            <input type="text" id="solicitudNumero" name="solicitudNumero" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-100 text-gray-700" value="Cargando..." readonly>
+                        </div>
+                        <div>
+                            <label for="fechaCreacion" class="block text-sm font-medium text-gray-700 mb-1">Fecha de Creación</label>
+                            <input type="text" id="fechaCreacion" name="fechaCreacion" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-100 text-gray-700 text-right" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sección 1: Datos del cliente -->
+                <div class="mb-8">
+                    <h2 class="text-2xl font-bold mb-4 text-green-700 border-b-2 pb-2 border-green-200">1. Datos del Cliente</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div>
+                            <label for="nombre" class="block text-sm font-medium text-gray-700 mb-1">Nombre Completo</label>
+                            <input type="text" id="nombre" name="nombre" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 transition duration-150 ease-in-out" required>
+                        </div>
+                        <div>
+                            <label for="telefono" class="block text-sm font-medium text-gray-700 mb-1">Número Telefónico</label>
+                            <input type="tel" id="telefono" name="telefono" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 transition duration-150 ease-in-out" required>
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Correo Electrónico</label>
+                            <input type="email" id="email" name="email" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 transition duration-150 ease-in-out">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sección 2: Detalle del pedido -->
+                <div class="mb-8">
+                    <h2 class="text-2xl font-bold mb-4 text-green-700 border-b-2 pb-2 border-green-200">2. Detalle del Pedido</h2>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-300 rounded-lg overflow-hidden shadow-sm">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="py-3.5 px-4 text-left text-sm font-semibold text-gray-900">Nro</th>
+                                    <th scope="col" class="py-3.5 px-4 text-left text-sm font-semibold text-gray-900">Espesor</th>
+                                    <th scope="col" class="py-3.5 px-4 text-left text-sm font-semibold text-gray-900">Largo (m)</th>
+                                    <th scope="col" class="py-3.5 px-4 text-left text-sm font-semibold text-gray-900">Ancho (m)</th>
+                                    <th scope="col" class="py-3.5 px-4 text-left text-sm font-semibold text-gray-900">Cantidad</th>
+                                    <th scope="col" class="py-3.5 px-4 text-left text-sm font-semibold text-gray-900">Total m²</th>
+                                    <th scope="col" class="relative py-3.5 px-4">
+                                        <span class="sr-only">Eliminar</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="pedidoItems" class="bg-white divide-y divide-gray-200">
+                                <!-- Los items del pedido se agregarán aquí dinámicamente -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="mt-4 flex justify-end">
+                        <button type="button" id="addItemBtn" class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition duration-150 ease-in-out">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
+                            </svg>
+                            Agregar línea
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sección 3: Resumen del pedido -->
+                <div class="mb-8">
+                    <h2 class="text-2xl font-bold mb-4 text-green-700 border-b-2 pb-2 border-green-200">3. Resumen del Pedido</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-gray-600">
+                        <div class="bg-gray-50 p-4 rounded-md shadow-sm">
+                            <p class="text-sm font-medium">Cantidad total de vidrios:</p>
+                            <p id="totalItems" class="text-2xl font-extrabold text-green-600 mt-1">0</p>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-md shadow-sm">
+                            <p class="text-sm font-medium">Cantidad de metros cuadrados totales:</p>
+                            <p id="totalM2" class="text-2xl font-extrabold text-green-600 mt-1">0.00</p>
+                        </div>
+                        <div class="col-span-full">
+                            <p class="text-lg font-medium text-gray-700 mt-4 mb-2">Total m² discriminados por espesor:</p>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                                <div class="bg-gray-50 p-4 rounded-md shadow-sm">
+                                    <p class="text-sm font-medium">6mm:</p>
+                                    <p id="totalM2_6mm" class="text-xl font-bold text-gray-800 mt-1">0.00</p>
+                                </div>
+                                <div class="bg-gray-50 p-4 rounded-md shadow-sm">
+                                    <p class="text-sm font-medium">8mm:</p>
+                                    <p id="totalM2_8mm" class="text-xl font-bold text-gray-800 mt-1">0.00</p>
+                                </div>
+                                <div class="bg-gray-50 p-4 rounded-md shadow-sm">
+                                    <p class="text-sm font-medium">10mm:</p>
+                                    <p id="totalM2_10mm" class="text-xl font-bold text-gray-800 mt-1">0.00</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botones de acción -->
+                <div class="mt-8 pt-4 border-t-2 flex flex-col sm:flex-row justify-center items-center gap-4 border-green-200">
+                    <button type="submit" class="w-full sm:w-auto px-8 py-3 text-lg font-semibold text-white bg-green-600 rounded-full shadow-lg hover:bg-green-700 transition transform duration-150 ease-in-out hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                        <span id="submitButtonText">Enviar Pedido</span>
+                        <div id="loadingIndicator" class="hidden animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full ml-2"></div>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal para la confirmación de envío a la base de datos -->
+    <div id="submissionModal" class="modal-overlay hidden">
+        <div class="modal-content text-center">
+            <h3 class="text-xl font-bold mb-4">¡Pedido Enviado!</h3>
+            <p class="mb-4">Los datos de su pedido han sido guardados exitosamente en la base de datos.</p>
+            <div class="flex justify-center space-x-4">
+                <button id="closeModalBtn" class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition duration-150 ease-in-out">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para la autenticación de administrador (se mantiene pero no es accesible) -->
+    <div id="authModal" class="modal-overlay hidden">
+        <div class="modal-content text-center">
+            <h3 class="text-2xl font-bold mb-4 text-gray-800">Acceso de Administrador</h3>
+            <p id="authMessage" class="text-gray-600 mb-6">Por favor, ingresa el código para continuar.</p>
+            <div class="mb-6">
+                <input type="number" id="adminCodeInput" class="w-full text-center text-2xl font-mono tracking-wide p-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 transition duration-300" placeholder="000000" minlength="6" maxlength="6">
+            </div>
+            <div class="flex space-x-4">
+                <button id="validateCodeBtn" class="flex-1 bg-green-500 hover:bg-green-600 disabled:bg-gray-400 text-white font-bold py-3 px-6 rounded-full transition duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-green-300">
+                    Validar
+                </button>
+                <button id="closeAuthModalBtn" class="flex-1 bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 rounded-full transition duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-red-300">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para ver los pedidos guardados (se mantiene pero no es accesible) -->
+    <div id="ordersModal" class="orders-modal-overlay hidden">
+        <div class="orders-modal-content">
+            <div class="flex-grow">
+                <h3 class="text-3xl font-extrabold mb-4 text-green-800 text-center">Historial de Pedidos</h3>
+                <div id="ordersListContainer" class="overflow-y-auto max-h-[80vh]">
+                    <div id="loadingOrders" class="text-center text-gray-500 my-4">Cargando pedidos...</div>
+                    <table class="min-w-full divide-y divide-gray-300">
+                        <thead class="bg-gray-50 sticky top-0">
+                            <tr>
+                                <th class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900"># Solicitud</th>
+                                <th class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900">Fecha</th>
+                                <th class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900">Cliente</th>
+                                <th class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900">Teléfono</th>
+                                <th class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900">Correo Electrónico</th>
+                                <th class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900">Nro.</th>
+                                <th class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900">Espesor</th>
+                                <th class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900">Largo (m)</th>
+                                <th class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900">Ancho (m)</th>
+                                <th class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900">Cantidad</th>
+                                <th class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900">Total m²</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ordersTableBody" class="bg-white divide-y divide-gray-200">
+                            <!-- Los pedidos se cargarán aquí dinámicamente -->
+                        </tbody>
+                    </table>
+                    <div id="noOrdersMessage" class="text-center text-gray-500 my-4 hidden">No hay pedidos guardados todavía.</div>
+                </div>
+            </div>
+            <div class="mt-4 pt-4 border-t-2 border-green-200 flex flex-col sm:flex-row justify-between items-center gap-4">
+                <button id="downloadOrdersBtn" class="w-full sm:w-auto px-6 py-2 text-sm font-semibold text-green-700 bg-white rounded-full shadow-lg border border-green-600 hover:bg-green-50 transition transform duration-150 ease-in-out hover:scale-105">
+                    Descargar Pedidos (CSV)
+                </button>
+                <button id="backToHomeBtnModal" class="w-full sm:w-auto px-6 py-2 bg-gray-100 text-gray-600 rounded-md hover:bg-gray-200 transition duration-150 ease-in-out">
+                    Volver a Inicio
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Enlaces a Firebase SDK (Firestore y Auth) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, doc, getDoc, setDoc, updateDoc, runTransaction } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Variables globales proporcionadas por el entorno de Canvas
+        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : '';
+
+        let db;
+        let auth;
+        let authReady = false;
+
+        // =======================================================================================================
+        // IMPORTANTE: REEMPLAZA 'TU_ID_DE_APPS_SCRIPT_AQUI' con el ID de despliegue de tu Google Apps Script.
+        // El ID actual es un marcador de posición y la aplicación no funcionará correctamente hasta que lo cambies.
+        // =======================================================================================================
+        const SCRIPT_ID = 'AKfycbwyf_ke-odXn1h4xjVqVBNbhbJQtI0cHMNn8gY8ajcIaAAeeGoiIoZhnc-ou7cnuROV';
+
+        // Selecciona los elementos del DOM necesarios
+        const homeView = document.getElementById('home-view');
+        const infoView = document.getElementById('info-view');
+        const formView = document.getElementById('form-view');
+        const clienteBtn = document.getElementById('clienteBtn');
+        const backToHomeBtn = document.getElementById('backToHomeBtn');
+        const backToHomeFromInfoBtn = document.getElementById('backToHomeFromInfoBtn');
+        const proceedToFormBtn = document.getElementById('proceedToFormBtn');
+        const backToHomeBtnModal = document.getElementById('backToHomeBtnModal');
+        const pedidoItemsContainer = document.getElementById('pedidoItems');
+        const addItemBtn = document.getElementById('addItemBtn');
+        const submissionModal = document.getElementById('submissionModal');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const submitButton = document.querySelector('#pedidoForm button[type="submit"]');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const ordersModal = document.getElementById('ordersModal');
+        const ordersTableBody = document.getElementById('ordersTableBody');
+        const loadingOrders = document.getElementById('loadingOrders');
+        const noOrdersMessage = document.getElementById('noOrdersMessage');
+        const solicitudNumeroInput = document.getElementById('solicitudNumero');
+        const downloadOrdersBtn = document.getElementById('downloadOrdersBtn');
+
+        // Los elementos para la autenticación de administrador se mantienen en el DOM
+        // pero ahora no son accesibles a través de un botón.
+        const authModal = document.getElementById('authModal');
+        const authMessage = document.getElementById('authMessage');
+        const adminCodeInput = document.getElementById('adminCodeInput');
+        const validateCodeBtn = document.getElementById('validateCodeBtn');
+        const closeAuthModalBtn = document.getElementById('closeAuthModalBtn');
+        const adminEmail = 'sunglassmgca@gmail.com';
+        let adminVerificationCode = '';
+
+        // Variables para el formulario
+        let itemCounter = 0;
+        let allOrdersData = [];
+
+        /**
+         * Inicializa Firebase y configura el listener de autenticación.
+         */
+        function initializeFirebase() {
+            try {
+                console.log("Iniciando la inicialización de Firebase...");
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+
+                onAuthStateChanged(auth, async (user) => {
+                    if (user) {
+                        console.log("Usuario autenticado. UID:", user.uid);
+                        authReady = true;
+                        initializeAppLogic();
+                    } else {
+                        console.log("No hay usuario, intentando iniciar sesión anónimamente...");
+                        try {
+                            if (initialAuthToken) {
+                                await signInWithCustomToken(auth, initialAuthToken);
+                            } else {
+                                await signInAnonymously(auth);
+                            }
+                        } catch (error) {
+                            console.error("Error al autenticar anónimamente:", error);
+                        }
+                    }
+                });
+
+            } catch (error) {
+                console.error("Error al inicializar Firebase:", error);
+            }
+        }
+
+        /**
+         * Contiene toda la lógica de la aplicación que depende de que Firebase esté listo.
+         */
+        function initializeAppLogic() {
+            console.log("Lógica de la aplicación inicializada.");
+
+            document.getElementById('fechaCreacion').value = getFormattedDate();
+
+            // Llama a la función que solo lee el siguiente número sin incrementarlo
+            fetchAndDisplayInitialRequestNumber();
+
+            if (pedidoItemsContainer.querySelectorAll('tr').length === 0) {
+                addNewItemRow();
+            }
+
+            // Manejo de la navegación entre vistas
+            clienteBtn.addEventListener('click', () => {
+                showView(infoView);
+            });
+
+            proceedToFormBtn.addEventListener('click', () => {
+                showView(formView);
+                // Asegura que el número de solicitud se actualice al entrar al formulario
+                fetchAndDisplayInitialRequestNumber();
+            });
+
+            backToHomeBtn.addEventListener('click', () => {
+                showView(homeView);
+            });
+
+            backToHomeFromInfoBtn.addEventListener('click', () => {
+                showView(homeView);
+            });
+
+            backToHomeBtnModal.addEventListener('click', () => {
+                ordersModal.classList.add('hidden');
+                showView(homeView);
+            });
+
+            addItemBtn.addEventListener('click', addNewItemRow);
+            document.getElementById('pedidoForm').addEventListener('submit', handleFormSubmit);
+            downloadOrdersBtn.addEventListener('click', () => exportToCSV(allOrdersData));
+
+            // Event listener para el botón "Cerrar" en el modal de confirmación
+            closeModalBtn.addEventListener('click', () => {
+                submissionModal.classList.add('hidden');
+                showView(homeView);
+            });
+
+            closeAuthModalBtn.addEventListener('click', () => {
+                authModal.classList.add('hidden');
+                adminCodeInput.value = '';
+            });
+
+            validateCodeBtn.addEventListener('click', handleCodeValidation);
+            adminCodeInput.addEventListener('input', (e) => {
+                validateCodeBtn.disabled = e.target.value.length !== 6;
+            });
+            adminCodeInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && e.target.value.length === 6) {
+                    handleCodeValidation();
+                }
+            });
+
+            validateCodeBtn.disabled = true;
+        }
+
+        /**
+         * Muestra una vista y oculta las demás.
+         * @param {HTMLElement} viewToShow - La vista del DOM a mostrar.
+         */
+        function showView(viewToShow) {
+            homeView.classList.add('hidden');
+            infoView.classList.add('hidden');
+            formView.classList.add('hidden');
+            viewToShow.classList.remove('hidden');
+        }
+
+        /**
+         * Obtiene el próximo número de solicitud de Firestore sin incrementarlo.
+         * Se usa solo para mostrar el número inicial en el formulario.
+         * @returns {Promise<void>}
+         */
+        async function fetchAndDisplayInitialRequestNumber() {
+            if (!db || !authReady) {
+                solicitudNumeroInput.value = "Error al cargar";
+                return;
+            }
+
+            const counterDocRef = doc(db, `artifacts/${appId}/public/data/counters`, 'request_counter');
+
+            try {
+                const docSnap = await getDoc(counterDocRef);
+                let nextNumber = 1;
+
+                if (docSnap.exists()) {
+                    nextNumber = (docSnap.data().lastNumber || 0) + 1;
+                }
+
+                if (nextNumber > 99999) {
+                    nextNumber = 1;
+                }
+
+                const formattedNumber = String(nextNumber).padStart(5, '0');
+                solicitudNumeroInput.value = `SOL-${formattedNumber}`;
+
+            } catch (error) {
+                console.error("Error al obtener el número de solicitud inicial:", error);
+                solicitudNumeroInput.value = "Error";
+            }
+        }
+
+        /**
+         * **FUNCIÓN CLAVE: Obtiene y atómicamente incrementa el contador de solicitudes en Firestore.**
+         * Utiliza una transacción para asegurar que el número es único, incluso con múltiples usuarios.
+         * @returns {Promise<string>} - El nuevo número de solicitud formateado.
+         */
+        async function getAndIncrementRequestNumber() {
+            const counterDocRef = doc(db, `artifacts/${appId}/public/data/counters`, 'request_counter');
+            let newNumber = 0;
+
+            try {
+                await runTransaction(db, async (transaction) => {
+                    const counterDoc = await transaction.get(counterDocRef);
+                    let currentNumber = 0;
+
+                    if (counterDoc.exists()) {
+                        currentNumber = counterDoc.data().lastNumber;
+                    }
+
+                    newNumber = (currentNumber || 0) + 1;
+                    if (newNumber > 99999) {
+                        newNumber = 1; // Reiniciar si llega a 99999
+                    }
+
+                    // Escribe el nuevo valor incrementado de vuelta
+                    transaction.set(counterDocRef, { lastNumber: newNumber });
+                });
+
+                const formattedNumber = String(newNumber).padStart(5, '0');
+                return `SOL-${formattedNumber}`;
+
+            } catch (error) {
+                console.error("Error al obtener y actualizar el número de solicitud:", error);
+                throw new Error("No se pudo generar un número de solicitud único. Por favor, inténtelo de nuevo.");
+            }
+        }
+
+        /**
+         * Obtiene la fecha actual en formato DD/MM/YYYY.
+         * @returns {string} - La fecha actual formateada.
+         */
+        function getFormattedDate() {
+            const now = new Date();
+            const day = String(now.getDate()).padStart(2, '0');
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const year = now.getFullYear();
+            return `${day}/${month}/${year}`;
+        }
+
+        /**
+         * Obtiene la fecha actual en formato YYYY_MM_DD para el nombre del archivo.
+         * @returns {string} - La fecha actual formateada.
+         */
+        function getFormattedDateForFilename() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            return `${year}_${month}_${day}`;
+        }
+
+        /**
+         * Agrega una nueva fila al formulario para un nuevo ítem del pedido.
+         */
+        function addNewItemRow() {
+            itemCounter++;
+
+            const newRow = document.createElement('tr');
+            newRow.className = "hover:bg-gray-100 transition duration-150 ease-in-out";
+            newRow.innerHTML = `
+                <td class="whitespace-nowrap py-4 px-4 text-sm font-medium text-gray-900">${itemCounter}</td>
+                <td class="py-4 px-4 whitespace-nowrap text-sm text-gray-500">
+                    <select name="espesor_${itemCounter}" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500">
+                        <option value="6">6mm</option>
+                        <option value="8">8mm</option>
+                        <option value="10">10mm</option>
+                    </select>
+                </td>
+                <td class="py-4 px-4 whitespace-nowrap text-sm text-gray-500">
+                    <input type="number" step="0.01" min="0" name="largo_${itemCounter}" class="largoInput w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500" placeholder="0.00" required>
+                </td>
+                <td class="py-4 px-4 whitespace-nowrap text-sm text-gray-500">
+                    <input type="number" step="0.01" min="0" name="ancho_${itemCounter}" class="anchoInput w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500" placeholder="0.00" required>
+                </td>
+                <td class="py-4 px-4 whitespace-nowrap text-sm text-gray-500">
+                    <input type="number" step="1" min="1" name="cantidad_${itemCounter}" class="cantidadInput w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500" value="1" required>
+                </td>
+                <td class="py-4 px-4 whitespace-nowrap text-sm text-gray-500">
+                    <input type="text" name="totalM2_${itemCounter}" class="totalM2Input w-full border-gray-300 bg-gray-100 rounded-md shadow-sm text-gray-700" value="0.00" readonly>
+                </td>
+                <td class="py-4 px-4 whitespace-nowrap text-right text-sm font-medium">
+                    <button type="button" class="deleteItemBtn text-red-600 hover:text-red-900 transition duration-150 ease-in-out">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                </td>
+            `;
+
+            pedidoItemsContainer.appendChild(newRow);
+
+            const largoInput = newRow.querySelector('.largoInput');
+            const anchoInput = newRow.querySelector('.anchoInput');
+            const cantidadInput = newRow.querySelector('.cantidadInput');
+            const espesorSelect = newRow.querySelector('select');
+
+            largoInput.addEventListener('input', updateRowAndSummary);
+            anchoInput.addEventListener('input', updateRowAndSummary);
+            cantidadInput.addEventListener('input', updateRowAndSummary);
+            espesorSelect.addEventListener('change', updateSummary);
+
+            newRow.querySelector('.deleteItemBtn').addEventListener('click', () => {
+                newRow.remove();
+                updateCorrelativeNumbers();
+                updateSummary();
+            });
+
+            updateCorrelativeNumbers();
+            updateSummary();
+        }
+
+        /**
+         * Actualiza el cálculo de metros cuadrados para una fila y el resumen general.
+         * @param {Event} event - El evento que disparó la función.
+         */
+        function updateRowAndSummary(event) {
+            const row = event.target.closest('tr');
+            const largo = parseFloat(row.querySelector('.largoInput').value) || 0;
+            const ancho = parseFloat(row.querySelector('.anchoInput').value) || 0;
+            const cantidad = parseInt(row.querySelector('.cantidadInput').value) || 0;
+            const totalM2Input = row.querySelector('.totalM2Input');
+
+            const totalM2 = (cantidad * largo * ancho).toFixed(2);
+            totalM2Input.value = totalM2;
+
+            updateSummary();
+        }
+
+        /**
+         * Recalcula y actualiza todos los totales en la sección de resumen.
+         */
+        function updateSummary() {
+            try {
+                const allRows = document.querySelectorAll('#pedidoItems tr');
+                let totalItems = 0;
+                let totalM2Global = 0;
+                const totalM2ByThickness = { '6': 0, '8': 0, '10': 0 };
+
+                allRows.forEach(row => {
+                    const cantidad = parseInt(row.querySelector('.cantidadInput').value) || 0;
+                    totalItems += cantidad;
+
+                    const totalM2Value = parseFloat(row.querySelector('.totalM2Input').value) || 0;
+                    const thickness = row.querySelector('select').value;
+
+                    totalM2Global += totalM2Value;
+                    totalM2ByThickness[thickness] += totalM2Value;
+                });
+
+                document.getElementById('totalItems').textContent = totalItems;
+                document.getElementById('totalM2').textContent = totalM2Global.toFixed(2);
+                document.getElementById('totalM2_6mm').textContent = totalM2ByThickness['6'].toFixed(2);
+                document.getElementById('totalM2_8mm').textContent = totalM2ByThickness['8'].toFixed(2);
+                document.getElementById('totalM2_10mm').textContent = totalM2ByThickness['10'].toFixed(2);
+            } catch (error) {
+                console.error("Error al actualizar el resumen del pedido:", error);
+            }
+        }
+
+        /**
+         * Actualiza los números correlativos de las filas después de una eliminación.
+         */
+        function updateCorrelativeNumbers() {
+            const rows = document.querySelectorAll('#pedidoItems tr');
+            rows.forEach((row, index) => {
+                const correlativeCell = row.querySelector('td');
+                if (correlativeCell) {
+                    correlativeCell.textContent = index + 1;
+                }
+            });
+            itemCounter = rows.length;
+        }
+
+        /**
+         * Maneja el envío del formulario.
+         * @param {Event} event - El evento de envío del formulario.
+         */
+        async function handleFormSubmit(event) {
+            event.preventDefault();
+
+            submitButton.disabled = true;
+            loadingIndicator.classList.remove('hidden');
+
+            try {
+                const SPREADSHEET_WEB_APP_URL = `https://script.google.com/macros/s/${SCRIPT_ID}/exec`;
+
+                // **CAMBIO CLAVE: Obtiene el número de solicitud único usando una transacción.**
+                const solicitudNumero = await getAndIncrementRequestNumber();
+                solicitudNumeroInput.value = solicitudNumero;
+
+                const fechaCreacion = document.getElementById('fechaCreacion').value;
+                const nombre = document.getElementById('nombre').value;
+                const telefono = document.getElementById('telefono').value;
+                const email = document.getElementById('email').value;
+
+                const allRows = document.querySelectorAll('#pedidoItems tr');
+                if (allRows.length === 0) {
+                    throw new Error("Por favor, agregue al menos una línea de pedido.");
+                }
+
+                // Extraemos los datos del formulario en un formato que el script de Apps Script pueda entender
+                const pedidoData = [];
+                allRows.forEach((row, index) => {
+                    pedidoData.push({
+                        solicitudNumero: solicitudNumero,
+                        fechaCreacion: fechaCreacion,
+                        nombre: nombre,
+                        telefono: telefono,
+                        email: email,
+                        nro: index + 1,
+                        espesor: row.querySelector('select').value + "mm",
+                        largo: parseFloat(row.querySelector('.largoInput').value) || 0,
+                        ancho: parseFloat(row.querySelector('.anchoInput').value) || 0,
+                        cantidad: parseInt(row.querySelector('.cantidadInput').value) || 0,
+                        totalM2: parseFloat(row.querySelector('.totalM2Input').value) || 0,
+                        timestamp: new Date().toISOString()
+                    });
+                });
+
+                const response = await fetch(SPREADSHEET_WEB_APP_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(pedidoData),
+                });
+
+                console.log("Datos enviados a Google Sheets con éxito.");
+
+                submissionModal.classList.remove('hidden');
+                document.getElementById('pedidoForm').reset();
+                pedidoItemsContainer.innerHTML = '';
+                solicitudNumeroInput.value = "Cargando...";
+                document.getElementById('fechaCreacion').value = getFormattedDate();
+                addNewItemRow();
+                fetchAndDisplayInitialRequestNumber(); // Actualiza el número para el próximo pedido
+
+            } catch (error) {
+                console.error("Error al guardar el pedido:", error);
+            } finally {
+                submitButton.disabled = false;
+                loadingIndicator.classList.add('hidden');
+            }
+        }
+
+        function handleCodeValidation() {
+            const userCode = adminCodeInput.value;
+            if (userCode === adminVerificationCode) {
+                authMessage.textContent = '¡Código correcto! Acceso concedido.';
+                setTimeout(() => {
+                    authModal.classList.add('hidden');
+                }, 1500);
+            } else {
+                authMessage.textContent = 'Código incorrecto. Por favor, inténtalo de nuevo.';
+                adminCodeInput.value = '';
+            }
+        }
+
+        initializeFirebase();
+    </script>
+</body>
+</html>
